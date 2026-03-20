@@ -1,2 +1,0 @@
-# mincovip.github.io
-iyf
