@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>每周动漫追剧日历系统</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <h1>每周动漫追剧日历</h1>
+        <p id="subtitle" class="subtitle"></p>
+      </div>
+
+      <div class="actions">
+        <button id="btnConfig" class="btn btn-primary" type="button">动漫配置</button>
+
+        <button id="btnExport" class="btn" type="button">导出数据</button>
+
+        <label class="btn" id="btnImportLabel">
+          导入数据
+          <input id="fileImport" type="file" accept="application/json" hidden />
+        </label>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="calendar" aria-label="每周追剧日历">
+        <div class="day-tabs" role="tablist" aria-label="星期切换" id="dayTabs"></div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2 id="dayTitle">周一</h2>
+            <p id="dayHint" class="muted"></p>
+          </div>
+
+          <div id="animeList" class="list" aria-live="polite"></div>
+          <div id="emptyState" class="empty" hidden>
+            <div class="empty-title">这里还没有追剧条目</div>
+            <div class="empty-desc">点击「动漫配置」，为该星期添加你要追的动漫吧。</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <!-- Modal -->
+    <div id="modalOverlay" class="modal-overlay" hidden></div>
+
+    <div id="configModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="configModalTitle" hidden>
+      <div class="modal-header">
+        <h3 id="configModalTitle">
+          动漫配置 - <span id="modalDayLabel"></span>
+        </h3>
+        <button class="icon-btn" id="btnModalClose" type="button" aria-label="关闭">×</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="animeForm" class="form">
+          <div class="field">
+            <label for="inputTitle">动漫名称</label>
+            <input id="inputTitle" required maxlength="80" placeholder="例如：海贼王" />
+          </div>
+
+          <div class="field">
+            <label for="inputUrl">播放网址</label>
+            <input id="inputUrl" required type="url" placeholder="https://..." />
+            <div class="field-hint">将保存到浏览器本地；打开时会使用新标签页。</div>
+          </div>
+
+          <div class="field">
+            <label for="inputRemark">备注（可选）</label>
+            <input id="inputRemark" maxlength="120" placeholder="例如：更新到第100集" />
+          </div>
+
+          <input type="hidden" id="inputEditId" />
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="btnAddOrSave">添加</button>
+            <button type="button" class="btn" id="btnResetForm">重置</button>
+          </div>
+        </form>
+
+        <div class="divider"></div>
+
+        <div class="subheader">
+          <h4>该星期清单</h4>
+          <p class="muted">点击「编辑」可修改，点击「删除」可移除。</p>
+        </div>
+
+        <div id="configList" class="config-list"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btnModalDone">完成</button>
+      </div>
+    </div>
+
+    <script src="./js/main.js" defer></script>
+  </body>
+</html>
